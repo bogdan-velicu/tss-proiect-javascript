@@ -1,0 +1,1 @@
+{ "name": "tss-proiect-javascript", "version": "1.0.0", "description": "Shopping cart and pricing engine - TSS project", "main": "src/ShoppingCart.js", "scripts": { "test": "jest" }, "keywords": ["testing", "jest"], "author": "Echipa TSS", "license": "MIT", "devDependencies": { "jest": "^29.7.0" } }
