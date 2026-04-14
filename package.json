@@ -1,1 +1,21 @@
-{ "name": "tss-proiect-javascript", "version": "1.0.0", "description": "Shopping cart and pricing engine - TSS project", "main": "src/ShoppingCart.js", "scripts": { "test": "jest" }, "keywords": ["testing", "jest"], "author": "Echipa TSS", "license": "MIT", "devDependencies": { "jest": "^29.7.0" } }
+{
+  "name": "tss-proiect-javascript",
+  "version": "1.0.0",
+  "description": "Shopping cart and pricing engine with comprehensive unit testing for TSS course project",
+  "main": "src/ShoppingCart.js",
+  "scripts": {
+    "test": "jest",
+    "test:coverage": "jest --coverage",
+    "test:verbose": "jest --verbose",
+    "test:watch": "jest --watchAll",
+    "mutate": "stryker run"
+  },
+  "keywords": ["testing", "jest", "unit-testing", "tss"],
+  "author": "Echipa TSS",
+  "license": "MIT",
+  "devDependencies": {
+    "jest": "^29.7.0",
+    "@stryker-mutator/core": "^8.6.0",
+    "@stryker-mutator/jest-runner": "^8.6.0"
+  }
+}
