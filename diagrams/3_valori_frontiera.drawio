@@ -1,0 +1,239 @@
+<mxfile host="app.diagrams.net" modified="2026-04-18T12:00:00.000Z" agent="draw.io" type="device">
+  <diagram id="bva" name="Analiza Valorilor de Frontiera">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1200" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Analiza Valorilor de Frontiera (BVA)&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="350" y="10" width="400" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- === SHIPPING THRESHOLD === -->
+        <mxCell id="ship_title" value="&lt;b&gt;Prag Transport Gratuit (200 RON)&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="60" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Number line -->
+        <mxCell id="ship_line" value="" style="shape=line;strokeColor=#333;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="50" y="120" width="900" height="1" as="geometry" />
+        </mxCell>
+
+        <!-- Zone labels -->
+        <mxCell id="ship_zone1" value="Transport PLATIT (15 RON)" style="text;html=1;align=center;fontSize=11;fontStyle=1;fontColor=#b85450;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="100" y="95" width="200" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="ship_zone2" value="Transport GRATUIT (0 RON)" style="text;html=1;align=center;fontSize=11;fontStyle=1;fontColor=#82b366;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="600" y="95" width="200" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- Test points -->
+        <mxCell id="sp1" value="" style="shape=ellipse;fillColor=#b85450;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="340" y="113" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="sp1_label" value="&lt;b&gt;199.99&lt;/b&gt;&lt;br&gt;→ 15 RON ✗" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="310" y="130" width="80" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sp2" value="" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="490" y="113" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="sp2_label" value="&lt;b&gt;200.00&lt;/b&gt;&lt;br&gt;→ GRATUIT ✓" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="455" y="130" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <mxCell id="sp3" value="" style="shape=ellipse;fillColor=#82b366;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="590" y="113" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="sp3_label" value="&lt;b&gt;200.01&lt;/b&gt;&lt;br&gt;→ GRATUIT ✓" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="555" y="130" width="90" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Threshold marker -->
+        <mxCell id="threshold_line" value="" style="shape=line;strokeColor=#d6b656;strokeWidth=2;dashed=1;direction=south;" vertex="1" parent="1">
+          <mxGeometry x="496" y="90" width="1" height="50" as="geometry" />
+        </mxCell>
+
+        <!-- === PRICE BOUNDARIES === -->
+        <mxCell id="price_title" value="&lt;b&gt;Pret - Limite (0.01 — 999999.99)&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="200" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="price_line" value="" style="shape=line;strokeColor=#333;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="50" y="260" width="900" height="1" as="geometry" />
+        </mxCell>
+
+        <!-- Min boundary tests -->
+        <mxCell id="pp1" value="" style="shape=ellipse;fillColor=#b85450;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="100" y="253" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="pp1_l" value="&lt;b&gt;0&lt;/b&gt;&lt;br&gt;EROARE ✗" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="75" y="270" width="65" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pp2" value="" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="200" y="253" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="pp2_l" value="&lt;b&gt;0.01&lt;/b&gt;&lt;br&gt;OK ✓" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="177" y="270" width="60" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pp3" value="" style="shape=ellipse;fillColor=#82b366;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="300" y="253" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="pp3_l" value="&lt;b&gt;0.02&lt;/b&gt;&lt;br&gt;OK ✓" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="277" y="270" width="60" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- Max boundary tests -->
+        <mxCell id="pp4" value="" style="shape=ellipse;fillColor=#82b366;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="620" y="253" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="pp4_l" value="&lt;b&gt;999999.98&lt;/b&gt;&lt;br&gt;OK ✓" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="590" y="270" width="80" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pp5" value="" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="740" y="253" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="pp5_l" value="&lt;b&gt;999999.99&lt;/b&gt;&lt;br&gt;OK ✓" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="710" y="270" width="80" height="35" as="geometry" />
+        </mxCell>
+
+        <mxCell id="pp6" value="" style="shape=ellipse;fillColor=#b85450;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="860" y="253" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="pp6_l" value="&lt;b&gt;1000000&lt;/b&gt;&lt;br&gt;EROARE ✗" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="830" y="270" width="75" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- === QUANTITY BOUNDARIES === -->
+        <mxCell id="qty_title" value="&lt;b&gt;Cantitate - Limite (1 — 50)&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="340" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qty_line" value="" style="shape=line;strokeColor=#333;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="50" y="400" width="900" height="1" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qp1" value="" style="shape=ellipse;fillColor=#b85450;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="150" y="393" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="qp1_l" value="&lt;b&gt;0&lt;/b&gt;&lt;br&gt;EROARE" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="132" y="410" width="50" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qp2" value="" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="280" y="393" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="qp2_l" value="&lt;b&gt;1&lt;/b&gt;&lt;br&gt;OK" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="265" y="410" width="40" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qp3" value="" style="shape=ellipse;fillColor=#82b366;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="380" y="393" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="qp3_l" value="&lt;b&gt;2&lt;/b&gt;&lt;br&gt;OK" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="365" y="410" width="40" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qp4" value="" style="shape=ellipse;fillColor=#82b366;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="580" y="393" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="qp4_l" value="&lt;b&gt;49&lt;/b&gt;&lt;br&gt;OK" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="565" y="410" width="40" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qp5" value="" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="700" y="393" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="qp5_l" value="&lt;b&gt;50&lt;/b&gt;&lt;br&gt;OK" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#d6b656;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="685" y="410" width="40" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qp6" value="" style="shape=ellipse;fillColor=#b85450;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="820" y="393" width="14" height="14" as="geometry" />
+        </mxCell>
+        <mxCell id="qp6_l" value="&lt;b&gt;51&lt;/b&gt;&lt;br&gt;EROARE" style="text;html=1;align=center;fontSize=10;strokeColor=none;fillColor=none;fontColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="802" y="410" width="50" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="leg" value="&lt;b&gt;Legenda:&lt;/b&gt;  ● Rosu = Respins   ● Galben = La frontiera (acceptat)   ● Verde = Peste frontiera (acceptat)" style="text;html=1;align=left;fontSize=10;strokeColor=#666;fillColor=#f5f5f5;rounded=1;spacingLeft=5;" vertex="1" parent="1">
+          <mxGeometry x="50" y="470" width="600" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- === VOLUME DISCOUNT TIERS === -->
+        <mxCell id="vd_title" value="&lt;b&gt;Frontiere Discount Volum&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="520" width="300" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="vd_line" value="" style="shape=line;strokeColor=#333;strokeWidth=3;" vertex="1" parent="1">
+          <mxGeometry x="50" y="600" width="900" height="1" as="geometry" />
+        </mxCell>
+
+        <!-- Tier zones -->
+        <mxCell id="vz0" value="0%" style="text;html=1;align=center;fontSize=11;fontStyle=1;strokeColor=none;fillColor=none;fontColor=#666;" vertex="1" parent="1">
+          <mxGeometry x="80" y="575" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vz2" value="2%" style="text;html=1;align=center;fontSize=11;fontStyle=1;strokeColor=none;fillColor=none;fontColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="270" y="575" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vz5" value="5%" style="text;html=1;align=center;fontSize=11;fontStyle=1;strokeColor=none;fillColor=none;fontColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="460" y="575" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vz7" value="7%" style="text;html=1;align=center;fontSize=11;fontStyle=1;strokeColor=none;fillColor=none;fontColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="650" y="575" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vz10" value="10%" style="text;html=1;align=center;fontSize=11;fontStyle=1;strokeColor=none;fillColor=none;fontColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="840" y="575" width="40" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Boundary values on line -->
+        <mxCell id="vb5" value="5" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;fontSize=9;fontStyle=1;fontColor=#fff;" vertex="1" parent="1">
+          <mxGeometry x="192" y="593" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="vb10" value="10" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;fontSize=9;fontStyle=1;fontColor=#fff;" vertex="1" parent="1">
+          <mxGeometry x="377" y="593" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="vb20" value="20" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;fontSize=9;fontStyle=1;fontColor=#fff;" vertex="1" parent="1">
+          <mxGeometry x="567" y="593" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="vb30" value="30" style="shape=ellipse;fillColor=#d6b656;strokeColor=#d6b656;fontSize=9;fontStyle=1;fontColor=#fff;" vertex="1" parent="1">
+          <mxGeometry x="757" y="593" width="20" height="15" as="geometry" />
+        </mxCell>
+
+        <!-- Below/at/above for boundary 5 -->
+        <mxCell id="vt4" value="4→0%" style="text;html=1;fontSize=9;fontColor=#b85450;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="155" y="610" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vt5" value="5→2%" style="text;html=1;fontSize=9;fontColor=#82b366;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="195" y="610" width="40" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="vt9" value="9→2%" style="text;html=1;fontSize=9;fontColor=#b85450;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="340" y="610" width="40" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vt10" value="10→5%" style="text;html=1;fontSize=9;fontColor=#82b366;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="380" y="610" width="45" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="vt19" value="19→5%" style="text;html=1;fontSize=9;fontColor=#b85450;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="525" y="610" width="45" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vt20" value="20→7%" style="text;html=1;fontSize=9;fontColor=#82b366;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="570" y="610" width="45" height="20" as="geometry" />
+        </mxCell>
+
+        <mxCell id="vt29" value="29→7%" style="text;html=1;fontSize=9;fontColor=#b85450;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="715" y="610" width="45" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="vt30" value="30→10%" style="text;html=1;fontSize=9;fontColor=#82b366;fontStyle=1;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="758" y="610" width="50" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
