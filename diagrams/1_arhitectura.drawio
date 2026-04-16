@@ -1,0 +1,111 @@
+<mxfile host="app.diagrams.net" modified="2026-04-18T12:00:00.000Z" agent="draw.io" type="device">
+  <diagram id="arch" name="Arhitectura Proiect">
+    <mxGraphModel dx="1200" dy="800" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1100" pageHeight="850" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Arhitectura Proiect — Shopping Cart System&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=16;" vertex="1" parent="1">
+          <mxGeometry x="300" y="20" width="400" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- ShoppingCart Box -->
+        <mxCell id="sc_header" value="&lt;b&gt;ShoppingCart&lt;/b&gt;&lt;br&gt;&lt;i&gt;src/ShoppingCart.js&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;verticalAlign=top;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="60" y="100" width="280" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="sc_methods" value="+ addItem(name, price, qty, cat)&lt;br&gt;+ removeItem(name)&lt;br&gt;+ updateQuantity(name, qty)&lt;br&gt;+ getItem(name)&lt;br&gt;+ getTotalItemCount()&lt;br&gt;+ getUniqueItemCount()&lt;br&gt;+ getSubtotal()&lt;br&gt;+ isEmpty()&lt;br&gt;+ clear()&lt;br&gt;+ setCoupon(code)&lt;br&gt;+ removeCoupon()&lt;br&gt;+ getItemsSortedBy(field)&lt;br&gt;+ getMostExpensiveItem()&lt;br&gt;+ getCheapestItem()&lt;br&gt;+ getSummary()" style="text;html=1;align=left;verticalAlign=top;spacingLeft=10;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="70" y="155" width="260" height="270" as="geometry" />
+        </mxCell>
+
+        <!-- PricingEngine Box -->
+        <mxCell id="pe_header" value="&lt;b&gt;PricingEngine&lt;/b&gt;&lt;br&gt;&lt;i&gt;src/PricingEngine.js&lt;/i&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;verticalAlign=top;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="660" y="100" width="280" height="340" as="geometry" />
+        </mxCell>
+        <mxCell id="pe_methods" value="+ calculateItemTax(price, qty, cat)&lt;br&gt;+ calculateTotalTax(items)&lt;br&gt;+ calculateShipping(subtotal, type)&lt;br&gt;+ applyPercentageDiscount(amt, %)&lt;br&gt;+ applyFixedDiscount(amt, val)&lt;br&gt;+ applyBuyXGetYFree(items, x, y)&lt;br&gt;+ getCoupon(code)&lt;br&gt;+ applyCoupon(code, subtotal)&lt;br&gt;+ calculateVolumeDiscount(n, sub)&lt;br&gt;+ calculateLoyaltyPoints(total)&lt;br&gt;+ calculateTotal(cart)" style="text;html=1;align=left;verticalAlign=top;spacingLeft=10;fontSize=11;fontFamily=Courier New;" vertex="1" parent="1">
+          <mxGeometry x="670" y="155" width="260" height="250" as="geometry" />
+        </mxCell>
+
+        <!-- Constants Box -->
+        <mxCell id="const_box" value="&lt;b&gt;constants.js&lt;/b&gt;&lt;br&gt;&lt;br&gt;TAX_RATES&lt;br&gt;SHIPPING&lt;br&gt;CART_LIMITS&lt;br&gt;DISCOUNT_TYPES&lt;br&gt;SAMPLE_COUPONS" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;verticalAlign=top;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="280" y="530" width="180" height="150" as="geometry" />
+        </mxCell>
+
+        <!-- Validators Box -->
+        <mxCell id="valid_box" value="&lt;b&gt;validators.js&lt;/b&gt;&lt;br&gt;&lt;br&gt;validateItem()&lt;br&gt;roundToTwo()&lt;br&gt;validateCoupon()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=top;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="540" y="530" width="180" height="130" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows: ShoppingCart -> constants -->
+        <mxCell id="arr1" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="sc_header" target="const_box" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr1_label" value="requires" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="arr1">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Arrows: ShoppingCart -> validators -->
+        <mxCell id="arr2" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#6c8ebf;strokeWidth=2;" edge="1" source="sc_header" target="valid_box" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr2_label" value="requires" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="arr2">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Arrows: PricingEngine -> constants -->
+        <mxCell id="arr3" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#82b366;strokeWidth=2;" edge="1" source="pe_header" target="const_box" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr3_label" value="requires" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="arr3">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Arrows: PricingEngine -> validators -->
+        <mxCell id="arr4" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#82b366;strokeWidth=2;" edge="1" source="pe_header" target="valid_box" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr4_label" value="requires" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="arr4">
+          <mxGeometry x="-0.2" relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Arrow: PricingEngine uses ShoppingCart (calculateTotal takes cart) -->
+        <mxCell id="arr5" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#666666;strokeWidth=2;dashed=1;" edge="1" source="pe_header" target="sc_header" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr5_label" value="calculateTotal(cart)" style="edgeLabel;html=1;align=center;verticalAlign=middle;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="arr5">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Test suites box -->
+        <mxCell id="tests_box" value="&lt;b&gt;Test Suites (Jest)&lt;/b&gt;&lt;br&gt;&lt;br&gt;equivalencePartitioning.test.js&lt;br&gt;boundaryValue.test.js&lt;br&gt;coverage.test.js&lt;br&gt;conditionPath.test.js&lt;br&gt;mutation.test.js&lt;br&gt;&lt;br&gt;&lt;b&gt;309 teste | 100% stmt coverage&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=top;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="350" y="100" width="250" height="190" as="geometry" />
+        </mxCell>
+
+        <!-- Arrows from tests to classes -->
+        <mxCell id="arr6" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;strokeWidth=1;dashed=1;" edge="1" source="tests_box" target="sc_header" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr6_label" value="tests" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="arr6">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <mxCell id="arr7" style="edgeStyle=orthogonalEdgeStyle;rounded=1;strokeColor=#9673a6;strokeWidth=1;dashed=1;" edge="1" source="tests_box" target="pe_header" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="arr7_label" value="tests" style="edgeLabel;html=1;fontSize=10;fontStyle=2;" vertex="1" connectable="0" parent="arr7">
+          <mxGeometry relative="1" as="geometry"><mxPoint as="offset" /></mxGeometry>
+        </mxCell>
+
+        <!-- Stryker box -->
+        <mxCell id="stryker_box" value="&lt;b&gt;Stryker Mutator&lt;/b&gt;&lt;br&gt;Mutation Score: 90.32%&lt;br&gt;511 killed / 568 total" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="380" y="340" width="200" height="70" as="geometry" />
+        </mxCell>
+
+        <mxCell id="arr8" style="rounded=1;strokeColor=#666;strokeWidth=1;dashed=1;" edge="1" source="tests_box" target="stryker_box" parent="1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

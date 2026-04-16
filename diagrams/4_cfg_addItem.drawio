@@ -1,0 +1,131 @@
+<mxfile host="app.diagrams.net" modified="2026-04-18T12:00:00.000Z" agent="draw.io" type="device">
+  <diagram id="cfg" name="CFG - addItem()">
+    <mxGraphModel dx="1000" dy="1200" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1000" pageHeight="1400" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Control Flow Graph — addItem(name, price, quantity, category)&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=14;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="150" y="10" width="550" height="35" as="geometry" />
+        </mxCell>
+
+        <!-- START -->
+        <mxCell id="start" value="&lt;b&gt;START&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="370" y="60" width="100" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- Node 1: validateItem -->
+        <mxCell id="n1" value="validateItem(name, price,&lt;br&gt;quantity, category)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="330" y="130" width="180" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e_start_n1" style="strokeColor=#333;strokeWidth=2;" edge="1" source="start" target="n1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Decision 1: validation passed? -->
+        <mxCell id="d1" value="Validare&lt;br&gt;OK?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="360" y="210" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e_n1_d1" style="strokeColor=#333;strokeWidth=2;" edge="1" source="n1" target="d1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- P1: validation fails -->
+        <mxCell id="p1_err" value="&lt;b&gt;throw Error&lt;/b&gt;&lt;br&gt;(invalid input)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="220" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d1_p1" value="NU" style="strokeColor=#b85450;strokeWidth=2;fontStyle=1;fontSize=10;" edge="1" source="d1" target="p1_err" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="p1_label" value="&lt;b&gt;P1&lt;/b&gt;" style="text;html=1;fontSize=12;fontColor=#b85450;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="60" y="225" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Node 2: get total count -->
+        <mxCell id="n2" value="currentTotal =&lt;br&gt;getTotalItemCount()" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="340" y="315" width="160" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d1_n2" value="DA" style="strokeColor=#82b366;strokeWidth=2;fontStyle=1;fontSize=10;" edge="1" source="d1" target="n2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Decision 2: cart capacity -->
+        <mxCell id="d2" value="currentTotal + qty&lt;br&gt;&amp;gt; MAX_ITEMS?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="335" y="395" width="170" height="75" as="geometry" />
+        </mxCell>
+        <mxCell id="e_n2_d2" style="strokeColor=#333;strokeWidth=2;" edge="1" source="n2" target="d2" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- P2: capacity exceeded -->
+        <mxCell id="p2_err" value="&lt;b&gt;throw Error&lt;/b&gt;&lt;br&gt;(cart full)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="100" y="407" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d2_p2" value="DA" style="strokeColor=#b85450;strokeWidth=2;fontStyle=1;fontSize=10;" edge="1" source="d2" target="p2_err" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="p2_label" value="&lt;b&gt;P2&lt;/b&gt;" style="text;html=1;fontSize=12;fontColor=#b85450;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="60" y="412" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- Node 3: find existing -->
+        <mxCell id="n3" value="existingItem =&lt;br&gt;items.find(name)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="345" y="510" width="150" height="45" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d2_n3" value="NU" style="strokeColor=#82b366;strokeWidth=2;fontStyle=1;fontSize=10;" edge="1" source="d2" target="n3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Decision 3: item exists? -->
+        <mxCell id="d3" value="Produs&lt;br&gt;existent?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="360" y="590" width="120" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e_n3_d3" style="strokeColor=#333;strokeWidth=2;" edge="1" source="n3" target="d3" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Decision 4: quantity overflow? -->
+        <mxCell id="d4" value="newQty &amp;gt;&lt;br&gt;MAX_PER_ITEM?" style="rhombus;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="550" y="680" width="140" height="70" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d3_d4" value="DA" style="strokeColor=#82b366;strokeWidth=2;fontStyle=1;fontSize=10;" edge="1" source="d3" target="d4" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- P3: quantity overflow -->
+        <mxCell id="p3_err" value="&lt;b&gt;throw Error&lt;/b&gt;&lt;br&gt;(qty overflow)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="740" y="690" width="140" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d4_p3" value="DA" style="strokeColor=#b85450;strokeWidth=2;fontStyle=1;fontSize=10;" edge="1" source="d4" target="p3_err" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="p3_label" value="&lt;b&gt;P3&lt;/b&gt;" style="text;html=1;fontSize=12;fontColor=#b85450;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="890" y="700" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- P4: update existing -->
+        <mxCell id="p4_update" value="Actualizeaza cantitate&lt;br&gt;si pret produs existent" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="545" y="790" width="170" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d4_p4" value="NU" style="strokeColor=#82b366;strokeWidth=2;fontStyle=1;fontSize=10;" edge="1" source="d4" target="p4_update" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="p4_label" value="&lt;b&gt;P4&lt;/b&gt;" style="text;html=1;fontSize=12;fontColor=#82b366;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="720" y="800" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- P5: add new item -->
+        <mxCell id="p5_new" value="Creeaza produs nou,&lt;br&gt;adauga in cos" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="180" y="680" width="150" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="e_d3_p5" value="NU" style="strokeColor=#82b366;strokeWidth=2;fontStyle=1;fontSize=10;" edge="1" source="d3" target="p5_new" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="p5_label" value="&lt;b&gt;P5&lt;/b&gt;" style="text;html=1;fontSize=12;fontColor=#82b366;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="140" y="690" width="30" height="20" as="geometry" />
+        </mxCell>
+
+        <!-- RETURN nodes -->
+        <mxCell id="ret1" value="&lt;b&gt;return&lt;/b&gt; item" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;" vertex="1" parent="1">
+          <mxGeometry x="370" y="900" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="e_p4_ret" style="strokeColor=#82b366;strokeWidth=2;" edge="1" source="p4_update" target="ret1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+        <mxCell id="e_p5_ret" style="strokeColor=#82b366;strokeWidth=2;" edge="1" source="p5_new" target="ret1" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- END -->
+        <mxCell id="end" value="&lt;b&gt;END&lt;/b&gt;" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=12;" vertex="1" parent="1">
+          <mxGeometry x="370" y="980" width="100" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="e_ret_end" style="strokeColor=#333;strokeWidth=2;" edge="1" source="ret1" target="end" parent="1"><mxGeometry relative="1" as="geometry" /></mxCell>
+
+        <!-- Path summary box -->
+        <mxCell id="summary" value="&lt;b&gt;Cai independente:&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;font color=&quot;#b85450&quot;&gt;&lt;b&gt;P1&lt;/b&gt;: Validare → Eroare (input invalid)&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#b85450&quot;&gt;&lt;b&gt;P2&lt;/b&gt;: Capacitate → Eroare (cos plin)&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#b85450&quot;&gt;&lt;b&gt;P3&lt;/b&gt;: Produs existent, cantitate depasita → Eroare&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#82b366&quot;&gt;&lt;b&gt;P4&lt;/b&gt;: Produs existent → Actualizare cantitate&lt;/font&gt;&lt;br&gt;&lt;font color=&quot;#82b366&quot;&gt;&lt;b&gt;P5&lt;/b&gt;: Produs nou → Adaugare in cos&lt;/font&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=11;align=left;spacingLeft=10;verticalAlign=top;spacingTop=5;" vertex="1" parent="1">
+          <mxGeometry x="30" y="830" width="310" height="160" as="geometry" />
+        </mxCell>
+
+        <!-- Cyclomatic complexity note -->
+        <mxCell id="cc_note" value="&lt;b&gt;Complexitate ciclomatica:&lt;/b&gt;&lt;br&gt;V(G) = E - N + 2 = 5&lt;br&gt;(5 cai independente)" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;align=left;spacingLeft=10;" vertex="1" parent="1">
+          <mxGeometry x="560" y="900" width="220" height="60" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

@@ -1,0 +1,154 @@
+<mxfile host="app.diagrams.net" modified="2026-04-18T12:00:00.000Z" agent="draw.io" type="device">
+  <diagram id="ep" name="Clase de Echivalenta">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1400" pageHeight="900" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+
+        <!-- Title -->
+        <mxCell id="title" value="&lt;b&gt;Partitionare in Clase de Echivalenta&lt;/b&gt;" style="text;html=1;align=center;verticalAlign=middle;fontSize=16;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="400" y="10" width="400" height="40" as="geometry" />
+        </mxCell>
+
+        <!-- PRET SECTION -->
+        <mxCell id="pret_label" value="&lt;b&gt;Pret (RON)&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="65" width="100" height="30" as="geometry" />
+        </mxCell>
+
+        <!-- Invalid zone left -->
+        <mxCell id="pret_inv1" value="&lt;b&gt;INVALID&lt;/b&gt;&lt;br&gt;(-∞, 0.01)&lt;br&gt;&lt;br&gt;Ex: 0, -10, NaN" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="30" y="100" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Valid zone -->
+        <mxCell id="pret_val" value="&lt;b&gt;VALID&lt;/b&gt;&lt;br&gt;[0.01, 999999.99]&lt;br&gt;&lt;br&gt;Ex: 45.99, 100, 2500" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="230" y="100" width="500" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Invalid zone right -->
+        <mxCell id="pret_inv2" value="&lt;b&gt;INVALID&lt;/b&gt;&lt;br&gt;(999999.99, +∞)&lt;br&gt;&lt;br&gt;Ex: 1000000" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="730" y="100" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- Boundary markers for pret -->
+        <mxCell id="pret_b1" value="0.01" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="215" y="185" width="50" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="pret_b2" value="999999.99" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="700" y="185" width="75" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- CANTITATE SECTION -->
+        <mxCell id="qty_label" value="&lt;b&gt;Cantitate&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="230" width="100" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qty_inv1" value="&lt;b&gt;INVALID&lt;/b&gt;&lt;br&gt;(-∞, 0]&lt;br&gt;&lt;br&gt;Ex: 0, -1, -5" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="30" y="265" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qty_val" value="&lt;b&gt;VALID&lt;/b&gt;&lt;br&gt;[1, 50] (numar intreg)&lt;br&gt;&lt;br&gt;Ex: 1, 25, 50" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="230" y="265" width="500" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qty_inv2" value="&lt;b&gt;INVALID&lt;/b&gt;&lt;br&gt;(50, +∞)&lt;br&gt;&lt;br&gt;Ex: 51, 100" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="730" y="265" width="200" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qty_inv3" value="&lt;b&gt;INVALID&lt;/b&gt;&lt;br&gt;Non-intreg&lt;br&gt;&lt;br&gt;Ex: 2.5, &quot;two&quot;" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="950" y="265" width="150" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="qty_b1" value="1" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="220" y="350" width="35" height="25" as="geometry" />
+        </mxCell>
+        <mxCell id="qty_b2" value="50" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="715" y="350" width="35" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- CUPON SECTION -->
+        <mxCell id="cup_label" value="&lt;b&gt;Stare Cupon&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="400" width="120" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cup_val" value="&lt;b&gt;VALID&lt;/b&gt;&lt;br&gt;Activ, neexpirat, nefolosit&lt;br&gt;&lt;br&gt;Ex: SAVE10, FLAT25" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="30" y="435" width="220" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cup_inv1" value="&lt;b&gt;INVALID&lt;/b&gt;&lt;br&gt;Expirat&lt;br&gt;&lt;br&gt;Ex: SUMMER20" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="260" y="435" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cup_inv2" value="&lt;b&gt;INVALID&lt;/b&gt;&lt;br&gt;Deja folosit&lt;br&gt;&lt;br&gt;Ex: USED50" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="450" y="435" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="cup_inv3" value="&lt;b&gt;INVALID&lt;/b&gt;&lt;br&gt;Inexistent&lt;br&gt;&lt;br&gt;Ex: FAKE123" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="640" y="435" width="180" height="80" as="geometry" />
+        </mxCell>
+
+        <!-- TRANSPORT SECTION -->
+        <mxCell id="ship_label" value="&lt;b&gt;Transport (subtotal)&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="545" width="170" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ship_paid" value="&lt;b&gt;PLATIT (15 RON)&lt;/b&gt;&lt;br&gt;subtotal &amp;lt; 200&lt;br&gt;&lt;br&gt;Ex: 50, 100, 199.99" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="30" y="580" width="300" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ship_free" value="&lt;b&gt;GRATUIT (0 RON)&lt;/b&gt;&lt;br&gt;subtotal ≥ 200&lt;br&gt;&lt;br&gt;Ex: 200, 250, 500" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="330" y="580" width="300" height="80" as="geometry" />
+        </mxCell>
+
+        <mxCell id="ship_b" value="200" style="shape=ellipse;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="315" y="665" width="40" height="25" as="geometry" />
+        </mxCell>
+
+        <!-- VOLUME DISCOUNT SECTION -->
+        <mxCell id="vol_label" value="&lt;b&gt;Discount Volum (nr. produse)&lt;/b&gt;" style="text;html=1;align=left;fontSize=13;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="30" y="710" width="250" height="30" as="geometry" />
+        </mxCell>
+
+        <mxCell id="vol_0" value="&lt;b&gt;0%&lt;/b&gt;&lt;br&gt;[0, 4]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#f5f5f5;strokeColor=#666;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="30" y="745" width="130" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_2" value="&lt;b&gt;2%&lt;/b&gt;&lt;br&gt;[5, 9]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="160" y="745" width="130" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_5" value="&lt;b&gt;5%&lt;/b&gt;&lt;br&gt;[10, 19]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="290" y="745" width="130" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_7" value="&lt;b&gt;7%&lt;/b&gt;&lt;br&gt;[20, 29]" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="420" y="745" width="130" height="55" as="geometry" />
+        </mxCell>
+        <mxCell id="vol_10" value="&lt;b&gt;10%&lt;/b&gt;&lt;br&gt;[30, +∞)" style="rounded=0;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=11;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="550" y="745" width="130" height="55" as="geometry" />
+        </mxCell>
+
+        <!-- Legend -->
+        <mxCell id="legend_title" value="&lt;b&gt;Legenda:&lt;/b&gt;" style="text;html=1;align=left;fontSize=11;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="850" y="440" width="60" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_valid" value="" style="rounded=0;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="850" y="465" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_valid_t" value="Clasa valida" style="text;html=1;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="875" y="462" width="80" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_inv" value="" style="rounded=0;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="850" y="488" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_inv_t" value="Clasa invalida" style="text;html=1;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="875" y="485" width="90" height="20" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_bnd" value="" style="shape=ellipse;fillColor=#fff2cc;strokeColor=#d6b656;" vertex="1" parent="1">
+          <mxGeometry x="850" y="511" width="20" height="15" as="geometry" />
+        </mxCell>
+        <mxCell id="leg_bnd_t" value="Valoare frontiera" style="text;html=1;fontSize=10;strokeColor=none;fillColor=none;" vertex="1" parent="1">
+          <mxGeometry x="875" y="508" width="100" height="20" as="geometry" />
+        </mxCell>
+
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
