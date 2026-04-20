@@ -36,6 +36,32 @@ Proiectul consta in implementarea si testarea unitara a unui **sistem de shoppin
 - Promotie buy-X-get-Y-free
 - Calcul total final (subtotal - reduceri + taxe + transport)
 
+## Diagrame
+
+### Arhitectura sistemului
+
+Diagrama de mai jos prezinta componentele principale ale sistemului si relatiile dintre ele: `ShoppingCart` gestioneaza produsele si cupoanele, `PricingEngine` calculeaza taxe, reduceri si totalul final, iar modulele utilitare (`validators.js`, `constants.js`) furnizeaza validari si constante partajate.
+
+![Arhitectura sistemului](screenshots/1_arhitectura.png)
+
+### Clase de echivalenta
+
+Diagrama ilustreaza partitionarea domeniilor de intrare in clase valide si invalide pentru fiecare parametru al functiilor testate (nume produs, pret, cantitate, categorie, cupoane, transport, reduceri pe volum).
+
+![Clase de echivalenta](screenshots/2_clase_echivalenta.png)
+
+### Valori de frontiera
+
+Diagrama prezinta valorile critice de la frontierele fiecarui domeniu — punctele exacte unde comportamentul sistemului se schimba (ex: pret minim 0.01, prag transport gratuit 200, praguri reducere volum la 5/10/20/30 produse).
+
+![Valori de frontiera](screenshots/3_valori_frontiera.png)
+
+### Graful de flux de control (CFG) — `addItem`
+
+Control Flow Graph-ul metodei `addItem` din `ShoppingCart`, utilizat pentru analiza acoperirii la nivel de cale si conditie. Graful evidentiaza ramurile de decizie: validare input, verificare capacitate cos, tratare produs existent vs. nou.
+
+![CFG addItem](screenshots/4_cfg_addItem.png)
+
 ## Strategii de testare
 
 ### 1. Partitionare in clase de echivalenta (Equivalence Partitioning)
