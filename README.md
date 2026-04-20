@@ -253,6 +253,12 @@ Suita completa contine **309 teste** distribuite pe 5 fisiere, acoperind toate c
 
 ![Rezultate rulare teste](screenshots/test_summary.png)
 
+## Contributii echipa
+
+Istoric commituri pe repository:
+
+![Istoric commituri](screenshots/commits.png)
+
 ## Tehnologii utilizate
 
 | Tool | Versiune | Scop |
