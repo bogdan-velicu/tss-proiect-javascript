@@ -112,6 +112,14 @@ All files          |     100 |    98.91 |     100 |     100 |
 -------------------|---------|----------|---------|---------|
 ```
 
+Captura de ecran cu raportul de acoperire generat de Jest:
+
+![Raport coverage Jest](screenshots/coverage_cropped.png)
+
+Raportul HTML detaliat (lcov) permite inspectarea acoperirii la nivel de linie pentru fiecare fisier sursa:
+
+![Raport lcov HTML](screenshots/lcov-report.png)
+
 Fisier: `tests/coverage.test.js`
 
 ### 4. Acoperire la nivel de conditie si cale (Condition & Path Coverage)
@@ -126,7 +134,17 @@ Am folosit **Stryker Mutator** pentru a genera mutanti si a verifica calitatea t
 
 Rezultate: **90.32% mutation score** (511 killed / 568 total)
 
+Captura de ecran cu raportul Stryker:
+
+![Raport mutation testing Stryker](screenshots/mutation-report.png)
+
 Fisier: `tests/mutation.test.js`
+
+## Rezultate rulare teste
+
+Suita completa contine **309 teste** distribuite pe 5 fisiere, acoperind toate cele 5 strategii de testare. Mai jos, captura de ecran cu rularea intregii suite:
+
+![Rezultate rulare teste](screenshots/test_summary.png)
 
 ## Tehnologii utilizate
 
