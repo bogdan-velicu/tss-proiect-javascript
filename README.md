@@ -26,6 +26,34 @@ Proiectul consta in implementarea si testarea unitara a unui **sistem de shoppin
 - Gestionare cupoane de reducere
 - Sortare produse, identificare cel mai scump/ieftin produs
 
+Metoda centrala `addItem` — valideaza inputul, verifica capacitatea cosului si trateaza produsele duplicate prin actualizarea cantitatii:
+
+```javascript
+addItem(name, price, quantity = 1, category = null) {
+  validateItem(name, price, quantity, category);
+
+  const currentTotal = this.getTotalItemCount();
+  if (currentTotal + quantity > CART_LIMITS.MAX_ITEMS) {
+    throw new Error(`Cannot add ${quantity} items. Cart limit is ${CART_LIMITS.MAX_ITEMS} (currently ${currentTotal})`);
+  }
+
+  const existingItem = this.items.find(item => item.name === name);
+  if (existingItem) {
+    const newQuantity = existingItem.quantity + quantity;
+    if (newQuantity > CART_LIMITS.MAX_QUANTITY_PER_ITEM) {
+      throw new Error(`Total quantity for "${name}" would exceed the limit of ${CART_LIMITS.MAX_QUANTITY_PER_ITEM}`);
+    }
+    existingItem.quantity = newQuantity;
+    existingItem.price = price;
+    return existingItem;
+  }
+
+  const newItem = { name: name.trim(), price: roundToTwo(price), quantity, category };
+  this.items.push(newItem);
+  return newItem;
+}
+```
+
 **PricingEngine** (`src/PricingEngine.js`)
 - Calculare taxe pe categorii de produse (electronics 19%, clothing 9%, food/books 5%)
 - Calculare cost transport (gratuit peste 200 RON)
@@ -35,6 +63,70 @@ Proiectul consta in implementarea si testarea unitara a unui **sistem de shoppin
 - Calculare puncte de fidelitate
 - Promotie buy-X-get-Y-free
 - Calcul total final (subtotal - reduceri + taxe + transport)
+
+Metoda `calculateShipping` — conditie compusa ce determina costul de transport in functie de tipul livrarii si de pragul pentru transport gratuit:
+
+```javascript
+calculateShipping(subtotal, shippingType = 'standard') {
+  if (typeof subtotal !== 'number' || subtotal < 0) {
+    throw new Error('Subtotal must be a non-negative number');
+  }
+
+  const validTypes = ['standard', 'express'];
+  if (!validTypes.includes(shippingType)) {
+    throw new Error(`Invalid shipping type. Use: ${validTypes.join(', ')}`);
+  }
+
+  // transport gratuit pentru comenzi standard peste prag
+  if (shippingType === 'standard' && subtotal >= SHIPPING.FREE_THRESHOLD) {
+    return 0;
+  }
+
+  return shippingType === 'express' ? SHIPPING.EXPRESS_COST : SHIPPING.STANDARD_COST;
+}
+```
+
+Metoda `calculateTotal` — orchestreaza intregul pipeline de calcul: reduceri pe volum, cupoane, taxe, transport si puncte de fidelitate:
+
+```javascript
+calculateTotal(cart) {
+  if (!cart || typeof cart.getSubtotal !== 'function') {
+    throw new Error('Invalid cart object');
+  }
+
+  if (cart.isEmpty()) {
+    return { subtotal: 0, discount: 0, couponDiscount: 0, volumeDiscount: 0,
+             tax: 0, shipping: 0, total: 0, loyaltyPoints: 0, savings: 0 };
+  }
+
+  const subtotal = cart.getSubtotal();
+  const totalItems = cart.getTotalItemCount();
+
+  const volumeDiscount = this.calculateVolumeDiscount(totalItems, subtotal);
+
+  let couponDiscount = 0;
+  if (cart.appliedCoupon) {
+    try {
+      couponDiscount = this.applyCoupon(cart.appliedCoupon, subtotal - volumeDiscount);
+    } catch (e) {
+      couponDiscount = 0;
+    }
+  }
+
+  const totalDiscount = roundToTwo(volumeDiscount + couponDiscount);
+  const discountedSubtotal = roundToTwo(subtotal - totalDiscount);
+
+  const tax = this.calculateTotalTax(cart.items);
+  const taxOnDiscounted = roundToTwo(tax * (discountedSubtotal / subtotal));
+  const shipping = this.calculateShipping(discountedSubtotal);
+
+  const total = roundToTwo(discountedSubtotal + taxOnDiscounted + shipping);
+  const loyaltyPoints = this.calculateLoyaltyPoints(total);
+
+  return { subtotal, discount: totalDiscount, couponDiscount, volumeDiscount,
+           tax: taxOnDiscounted, shipping, total, loyaltyPoints, savings: totalDiscount };
+}
+```
 
 ## Diagrame
 
@@ -139,6 +231,21 @@ Captura de ecran cu raportul Stryker:
 ![Raport mutation testing Stryker](screenshots/mutation-report.png)
 
 Fisier: `tests/mutation.test.js`
+
+## Comparatie teste proprii vs. teste generate de AI
+
+Am realizat o analiza comparativa intre suita noastra de teste (309 teste, 5 strategii) si teste generate automat de **ChatGPT (GPT-4)**. Raportul complet este disponibil in [`raport-ai.md`](raport-ai.md).
+
+Principalele concluzii:
+
+| Metrica | Teste proprii | Teste AI (ChatGPT) |
+|---------|:------------:|:------------------:|
+| Total teste | 309 | ~85 |
+| Statement coverage | 100% | 94% |
+| Branch coverage | 98.91% | 78% |
+| Mutation score | 90.32% | ~72% |
+
+Testele AI ofera un **punct de plecare rapid** cu acoperire decenta, dar nu inlocuiesc strategiile sistematice (EP, BVA, acoperire conditie, mutation testing) necesare pentru o suita de calitate ridicata. Detalii, exemple de cod comparative si analiza calitativa se gasesc in raportul dedicat.
 
 ## Rezultate rulare teste
 
