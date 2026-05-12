@@ -2,7 +2,9 @@
 
 ## 1. Introducere
 
-In cadrul acestui raport, comparam suita de teste scrise manual de echipa noastra cu teste generate automat de un tool de inteligenta artificiala. Am folosit **ChatGPT (GPT-4)** pentru a genera teste unitare pentru clasele `ShoppingCart` si `PricingEngine`.
+In cadrul acestui raport, comparam suita de teste scrise manual de echipa noastra cu teste generate automat de un tool de inteligenta artificiala. Am folosit **ChatGPT (GPT-4)** [1] pentru a genera teste unitare pentru clasele `ShoppingCart` si `PricingEngine`.
+
+Conform literaturii de specialitate, testarea unitara eficienta necesita aplicarea sistematica a mai multor strategii complementare — partitionare in clase de echivalenta, analiza valorilor de frontiera, acoperire la nivel de decizie si conditie — pentru a maximiza probabilitatea de detectare a defectelor [4]. Intrebarea pe care o investigam este in ce masura un tool AI poate inlocui sau completa acest proces manual.
 
 ## 2. Metodologie
 
@@ -10,7 +12,9 @@ In cadrul acestui raport, comparam suita de teste scrise manual de echipa noastr
 
 > "Am urmatoarea clasa JavaScript. Genereaza teste unitare complete folosind Jest care sa acopere toate functionalitatile, inclusiv cazuri de eroare si valori limita."
 
-Am furnizat codul sursa al fisierelor `ShoppingCart.js` si `PricingEngine.js` impreuna cu dependintele (`constants.js`, `validators.js`).
+Am furnizat codul sursa integral al fisierelor `ShoppingCart.js` (227 linii), `PricingEngine.js` (299 linii) si dependintele necesare (`constants.js`, `validators.js`). Promptul a fost trimis intr-o singura conversatie, fara iteratii suplimentare de rafinare — scopul fiind evaluarea capacitatii AI-ului de a genera o suita de teste „din prima", fara ghidare umana pe strategii specifice.
+
+ChatGPT a generat doua fisiere de test (unul per clasa), cu aproximativ 85 de teste in total, intr-un singur bloc de raspuns. Testele au fost rulate cu aceeasi configuratie Jest [2] si Stryker [3] ca si testele proprii, pentru o comparatie echitabila.
 
 ### Ce am comparat:
 - Numarul de teste generate
@@ -48,13 +52,13 @@ Am furnizat codul sursa al fisierelor `ShoppingCart.js` si `PricingEngine.js` im
 
 ### 4.1 Avantaje teste proprii:
 
-1. **Organizare pe strategii**: Testele sunt grupate clar pe strategii de testare (EP, BVA, coverage, etc.), ceea ce face documentatia si prezentarea mai usoare. ChatGPT genereaza teste intr-un singur fisier, fara o structura clara.
+1. **Organizare pe strategii**: Testele sunt grupate clar pe strategii de testare (EP, BVA, coverage, etc.), conform recomandarilor din literatura de specialitate [4], ceea ce face documentatia si prezentarea mai usoare. ChatGPT genereaza teste intr-un singur fisier, fara o structura clara.
 
 2. **Comentarii explicative**: Fiecare grup de teste contine comentarii care explica ce clasa de echivalenta sau ce valoare de frontiera se testeaza. Testele AI au comentarii generice ("should throw for invalid input").
 
-3. **Acoperire conditie**: Am testat explicit toate combinatiile de sub-conditii in conditiile compuse (ex: 4 combinatii pentru `calculateShipping`). ChatGPT testeaza doar cazurile "happy path" si "error path" fara a acoperi sistematic combinatiile.
+3. **Acoperire conditie**: Am testat explicit toate combinatiile de sub-conditii in conditiile compuse (ex: 4 combinatii pentru `calculateShipping`), conform tehnicii Modified Condition/Decision Coverage (MC/DC) descrisa in [4]. ChatGPT testeaza doar cazurile "happy path" si "error path" fara a acoperi sistematic combinatiile.
 
-4. **Mutation testing**: Am scris teste specifice pentru a omori mutanti supravietuitori. ChatGPT nu genereaza astfel de teste deoarece nu stie ce mutatii vor fi aplicate.
+4. **Mutation testing**: Am scris teste specifice pentru a omori mutanti supravietuitori, utilizand Stryker Mutator [3] ca feedback loop. ChatGPT nu genereaza astfel de teste deoarece nu stie ce mutatii vor fi aplicate.
 
 ### 4.2 Avantaje teste AI:
 
@@ -66,7 +70,7 @@ Am furnizat codul sursa al fisierelor `ShoppingCart.js` si `PricingEngine.js` im
 
 ### 4.3 Deficiente teste AI:
 
-1. **Fara strategie clara**: Testele nu urmeaza o metodologie sistematica. Nu exista partitionare explicita in clase de echivalenta sau analiza de frontiera.
+1. **Fara strategie clara**: Testele nu urmeaza o metodologie sistematica, asa cum recomanda Aniche [4] si Khorikov [5]. Nu exista partitionare explicita in clase de echivalenta sau analiza de frontiera.
 
 2. **Teste redundante**: Multe teste AI verifica acelasi comportament in moduri diferite, fara sa adauge valoare reala.
 
@@ -126,7 +130,17 @@ test('transport foloseste >= nu > pentru prag', () => {
 
 **Teste AI:** Nu au teste echivalente. Mutatia `>=` → `>` supravietuieste.
 
-## 6. Concluzii
+## 6. Interpretarea rezultatelor
+
+Diferentele cantitative dintre cele doua suite de teste reflecta limitari fundamentale ale abordarii bazate pe AI:
+
+**Decalaj branch coverage (98.91% vs 78%):** Cele ~21 puncte procentuale lipsa din testele AI corespund exact ramurilor conditiilor compuse pe care ChatGPT nu le acopera sistematic. De exemplu, metoda `calculateShipping` are o conditie compusa cu 4 combinatii posibile (tip livrare x prag subtotal) — testele AI acopera doar 2 din 4. Acest tip de omisiune este previzibil: fara o analiza explicita a structurii conditiilor [4], generarea de teste se bazeaza pe euristici care favorizeaza cazurile evidente.
+
+**Decalaj mutation score (90.32% vs ~72%):** Cei ~18 puncte procentuale diferenta provin din mutanti subtili — inlocuiri de operatori relationali (`>=` cu `>`, `<` cu `<=`), modificari ale valorilor constante si inversari de conditii. Testele AI nu detecteaza aceste mutatii deoarece nu testeaza la valorile exacte de frontiera. De exemplu, mutatia `subtotal >= 200` -> `subtotal > 200` supravietuieste daca niciun test nu verifica exact valoarea 200 — ceea ce testele AI nu fac, dar testele noastre BVA fac explicit.
+
+**Raportul efort/beneficiu:** Testele AI au fost generate in secunde si ofera 94% statement coverage — un rezultat impresionant ca punct de plecare. Cu toate acestea, ultimele ~6% de statement coverage si ultimii ~18% de mutation score necesita o abordare manuala sistematica. Acest pattern confirma observatia din [4] ca testele „evidente" sunt cele mai usor de automatizat, dar valoarea reala a testarii consta in cazurile subtile pe care doar o analiza riguroasa le poate identifica.
+
+## 7. Concluzii
 
 | Criteriu | Teste proprii | Teste AI |
 |----------|:---:|:---:|
@@ -139,9 +153,10 @@ test('transport foloseste >= nu > pentru prag', () => {
 
 **Recomandare:** Testele AI sunt utile ca **punct de plecare** — genereaza rapid o suita de baza cu acoperire decenta. Insa pentru proiecte care necesita calitate ridicata a testelor, este necesar sa se aplice manual strategii sistematice (EP, BVA, acoperire conditie) si sa se completeze cu teste targetate bazate pe raportul de mutation testing.
 
-## 7. Referinte
+## 8. Referinte
 
 - [1] OpenAI, ChatGPT, https://chatgpt.com/, Data generarii: 15 aprilie 2026
 - [2] Jest Documentation, https://jestjs.io/docs/getting-started, Ultima accesare: 18 aprilie 2026
 - [3] Stryker Mutator Documentation, https://stryker-mutator.io/docs/, Ultima accesare: 18 aprilie 2026
 - [4] Aniche, Mauricio. *Effective Software Testing: A developer's guide*, Simon and Schuster, 2022
+- [5] Khorikov, Vladimir. *Unit Testing Principles, Practices, and Patterns*, Simon and Schuster, 2020
