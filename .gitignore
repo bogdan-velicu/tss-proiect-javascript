@@ -4,6 +4,3 @@ coverage/
 reports/
 *.log
 .DS_Store
-.env
-demo.sh
-demo.js
