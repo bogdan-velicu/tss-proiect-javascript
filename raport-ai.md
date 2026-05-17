@@ -43,79 +43,86 @@ Toate testele generate au fost concatenate verbatim (cu mici corectii de format)
 
 | # | Tehnica | Metoda tinta | Platforma | Teste generate |
 |:--|:--|:--|:--|:--:|
-| P1 | Clase de echivalenta (EP) | `ShoppingCart.addItem` | ChatGPT (gpt-5) | 17 |
+| P1 | Clase de echivalenta (EP) | `ShoppingCart.addItem` | ChatGPT (gpt-5) | 13 |
 | P2 | BVA pe praguri 200 si 0 | `PricingEngine.calculateShipping` | ChatGPT (gpt-5) | 14 |
 | P3 | Statement / Branch coverage (5 cai CFG) | `ShoppingCart.addItem` | Gemini 2.5 Flash | 5 |
 | P4 | MC/DC pe conditie compusa | `PricingEngine.calculateShipping` | ChatGPT (gpt-5) | 3 |
 | P5 | Mutation testing (10 mutanti) | `PricingEngine` (5 metode) | Claude Sonnet 4.6 | 10 |
-| | | | **Total** | **49** |
+| | | | **Total** | **45** |
 
-Toate prompturile au folosit notatia, terminologia si etichetele specifice cursului (G1..Gn pentru clase globale, P1..Pn pentru cai independente in CFG, MC/DC cu tabel de perechi, mutanti etichetati cu valoarea de frontiera testata).
+Toate prompturile au folosit notatia, terminologia si etichetele specifice cursului (G1..Gn pentru clase globale, P1..Pn pentru cai independente in CFG, MC/DC cu tabel de perechi, mutanti etichetati cu valoarea de frontiera testata si comportamentul asteptat).
+
+Diferenta fata de prima iteratie: prompturile noi sunt **structurate explicit pe pasi** (PASUL 1: tabel, PASUL 2: tabel valori, PASUL 3: codul Jest), includ **constantele reale** ale proiectului, **semnaturile exacte ale metodelor** (cu ordinea argumentelor!), si avertismente proactive despre erori comune (ex: "NU folosi 'Fruits' ca categorie", "metoda este de instanta, NU statica").
 
 ### Rezultate brute (jest)
 
 Rularea suitei `npx jest tests/ai-targeted.test.js`:
 
 ```
-Tests:       16 failed, 33 passed, 49 total
+Tests:       45 passed, 45 total
 ```
 
-**Rata de succes: 33/49 = 67.3%**.
+**Rata de succes: 45/45 = 100%**.
 
 Distributie per prompt si platforma:
 
 | # | Platforma | Pass | Fail | Rata |
 |:--|:--|:--:|:--:|:--:|
-| P1 EP | ChatGPT | 17 | 0 | **100%** |
-| P2 BVA | ChatGPT | 8 | 6 | 57% |
-| P3 SC/BC | Gemini | 1 | 4 | 20% |
-| P4 MC/DC | ChatGPT | 0 | 3 | 0% |
-| P5 Mutation | Claude | 7 | 3 | 70% |
+| P1 EP | ChatGPT | 13 | 0 | **100%** |
+| P2 BVA | ChatGPT | 14 | 0 | **100%** |
+| P3 SC/BC | Gemini | 5 | 0 | **100%** |
+| P4 MC/DC | ChatGPT | 3 | 0 | **100%** |
+| P5 Mutation | Claude | 10 | 0 | **100%** |
 
-### Analiza esecurilor (16 teste)
+### Comparatie iteratia 1 vs iteratia 2 a prompturilor
 
-Esecurile NU sunt esecuri de metodologie — toate prompturile au respectat tehnica ceruta — ci **halucinatii ale AI-ului asupra API-ului si constantelor**, in ciuda specificarii explicite:
+In prima iteratie am folosit prompturi mai scurte (specificatie + cerinta). Rata de succes a fost **33/49 = 67%**. Esecurile (16) au fost toate halucinatii AI asupra API-ului: apel static, constante gresite (EXPRESS_COST=25 vs 30 real), categorii inventate ('Fruits'), ordine argumente permutata, semantici aproximate.
 
-| Cauza | Teste afectate | Exemplu | Platforma |
-|:--|:--:|:--|:--|
-| Apel static in loc de metoda de instanta (`PricingEngine.calculateShipping(...)`) | 3 | MC/DC t1-t3 | ChatGPT |
-| Constanta hardcodata gresita (`EXPRESS_COST = 25` vs real `30`) | 5 | BVA shipping express | ChatGPT |
-| `NaN` presupus ca arunca eroare (`typeof NaN === 'number'`) | 1 | BVA NaN | ChatGPT |
-| Categorie inventata (`'Fruits'`, `'Electronics'`) in loc de set valid | 4 | P2-P5 SC/BC | Gemini |
-| Ordine argumente gresita (`calculateItemTax(price, category, qty)` vs real `(price, qty, category)`) | 2 | M1, M2 | Claude |
-| Semantica gresita (`calculateLoyaltyPoints(100)` returneaza 20, nu 10) | 1 | M9 | Claude |
+Iteratia 2 a re-formulat fiecare prompt cu:
+- **structurare pas-cu-pas explicita** (PASUL 1, 2, 3 cu output asteptat per pas)
+- **constantele reale ale proiectului** listate inline
+- **semnaturile exacte** cu ordinea argumentelor evidentiata
+- **avertismente proactive** despre erorile comune din iteratia anterioara
+- **valori asteptate concrete** pentru fiecare test (in loc sa lase AI-ul sa le deduca)
 
-Observatie cheie: **promptul P1 (EP) a obtinut 17/17 = 100%** desi a folosit doar specificatia, fara semnaturi explicite. Diferenta fata de celelalte: prompt-ul a listat exhaustiv valorile valide si invalide pentru fiecare variabila — AI-ul nu a avut nimic de "ghicit". In contrast, P4 (MC/DC) a omis sa precizeze ca metoda este de instanta — toate cele 3 teste apeleaza static.
+Rezultat: **100% rata de succes**, fata de 67% in iteratia 1. Cele +33 puncte procentuale sunt rezultatul direct al specificatiei mai stricte din prompt.
+
+| Metrica | Iteratia 1 (scurta) | Iteratia 2 (detaliata) |
+|---------|:-------------------:|:----------------------:|
+| Teste generate | 49 | 45 |
+| Teste care trec | 33/49 (67%) | 45/45 (100%) |
+| Halucinatii API | 16 | 0 |
+| Lungime medie prompt | ~600 cuvinte | ~1500 cuvinte |
 
 ### Diferente intre platforme
 
 | Platforma | Stil cod | Observatii |
 |:--|:--|:--|
-| **ChatGPT (gpt-5)** | Concis, foloseste `beforeEach` corect, urmareste fidel cerinta | Hallucineaza constantele cand nu sunt date explicit |
-| **Gemini 2.5 Flash** | Verbose, comentarii in engleza pentru fiecare cale | Inventeaza categorii nementionate (`'Fruits'`, `'InvalidCategory'`) |
-| **Claude Sonnet 4.6** | Foarte structurat, foloseste corect `new PricingEngine()` din prima | Permuta ordinea argumentelor cand metoda are >2 parametri |
+| **ChatGPT (gpt-5)** | Concis, foloseste `beforeEach` corect, urmareste fidel cerinta pas-cu-pas | Cand prompt-ul include tabel BVA/EP explicit, traduce direct in cod Jest |
+| **Gemini 2.5 Flash** | Verbose, adauga comentarii in engleza pentru fiecare cale | Respecta constrangerile cand sunt listate explicit (categoriile valide) |
+| **Claude Sonnet 4.6** | Foarte structurat, foloseste corect `new PricingEngine()` din prima | Verifica de doua ori semnaturile cand le-am cerut explicit |
 
-### Comparatie: prompt generic vs prompturi tintite
+### Comparatie: prompt generic vs prompturi tintite (iteratia 2)
 
 | Metrica | Prompt generic | Prompturi tintite (5) |
 |---------|:--------------:|:---------------------:|
-| Teste generate | 113 | 49 |
-| Teste care trec | 113/113 (100%) | 33/49 (67%) |
+| Teste generate | 113 | 45 |
+| Teste care trec | 113/113 (100%) | 45/45 (100%) |
 | Strategii distincte | 1 (generala) | 5 (EP, BVA, SC/BC, MC/DC, MT) |
 | Platforme AI | 1 (ChatGPT) | 3 (ChatGPT + Gemini + Claude) |
-| Mapare test → metodologie | Nu | Da (per `describe`) |
-| Halucinatii API | Putine (vede sursa) | Multe (vede doar specificatia) |
-
-**Trade-off identificat:** promptul generic primeste codul sursa integral si produce teste care compileaza din prima, dar fara intentie metodologica clara. Prompturile tintite primesc doar specificatia + semnaturi si produc teste cu **intentie metodologica explicita per test**, dar platesc pretul halucinatiilor API atunci cand semantica nu este descrisa exhaustiv.
+| Mapare test → metodologie | Nu | Da (per `describe` + comentariu) |
+| Foloseste codul sursa | Da | Nu (doar specificatia) |
 
 ### Concluzie experiment
 
-Pentru un workflow de testare practic, **combinarea celor doua abordari** este cea mai eficienta:
-1. **Prompturi tintite** pentru a obtine suite metodologic curate (EP/BVA/MC/DC) ce pot fi auditate de un examinator,
-2. **Prompt generic** pentru a umple lacunele de coverage si pentru a obtine teste functionale care trec din prima,
-3. **Revizie umana** obligatorie pentru a corecta halucinatiile API in suita tintita.
+Promptul tintit FUNCTIONEAZA — dar **calitatea testelor generate depinde direct de calitatea promptului**. In iteratia 1, prompturile scurte au lasat loc de halucinatii; in iteratia 2, prompturile detaliate (cu constante, semnaturi, exemple, avertismente) au eliminat complet halucinatiile.
 
-Folosirea **mai multor platforme AI** in paralel a aratat ca limitarile nu sunt specifice unui singur model — toate trei modelele hallucineaza detalii de API atunci cand specificatia este incompleta, doar tipul de halucinatie difera. Prompturile tintite singure dau 67% rata de trecere — suficient pentru a demonstra metodologia, dar nu pentru a inlocui suita scrisa manual.
+Pentru un workflow de testare practic, **combinarea celor doua abordari** este cea mai eficienta:
+1. **Prompturi tintite detaliate** pentru a obtine suite metodologic curate (EP/BVA/MC/DC) ce pot fi auditate de un examinator,
+2. **Prompt generic** pentru a umple lacunele de coverage si pentru a obtine teste functionale care trec din prima,
+3. **Revizie umana** pentru a verifica corectitudinea valorilor asteptate (chiar daca codul compileaza si trece, semantica e responsabilitatea autorului).
+
+Folosirea **mai multor platforme AI** (ChatGPT, Gemini, Claude) in paralel a aratat ca, atunci cand promptul este suficient de explicit, toate trei platformele produc cod corect — limitarile sunt specifice promptului, nu modelului.
 
 ## 3. Rezultate Comparative
 
