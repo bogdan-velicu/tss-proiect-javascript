@@ -22,6 +22,101 @@ ChatGPT a generat doua fisiere de test (unul per clasa), cu aproximativ 85 de te
 - Calitatea testelor (specificitate, claritate, organizare)
 - Capacitatea de a detecta defecte (mutation score)
 
+## 2b. Abordare alternativa: Prompturi tintite (experiment live multi-platforma)
+
+Pe langa promptul generic initial, am realizat un **experiment cu prompturi tintite pe metodologie specifica**, conform indicatiilor din curs. In loc sa cerem AI-ului „toate testele posibile", am formulat cinci prompturi distincte (cate unul pentru fiecare dintre cele cinci strategii din curs: EP, BVA, SC/BC, MC/DC, mutation testing) si le-am trimis catre **trei platforme AI diferite**, pentru a testa daca abordarea metodologica este robusta intre modele.
+
+### Metodologie experiment
+
+Sesiunile au fost orchestrate automat prin Playwright. Platformele si modelele folosite:
+- **ChatGPT** (`https://chatgpt.com/`, model gpt-5) — 3 prompturi
+- **Google Gemini** (`https://gemini.google.com/`, model 2.5 Flash) — 1 prompt
+- **Anthropic Claude** (`https://claude.ai/`, model Sonnet 4.6) — 1 prompt
+
+Pentru fiecare prompt am salvat:
+- raspunsul textual integral (`screenshots/ai-prompts/promptN_*_response.txt`)
+- captura de ecran a conversatiei cu promptul si raspunsul vizibile (`screenshots/ai-prompts/promptN_*.png`)
+
+Toate testele generate au fost concatenate verbatim (cu mici corectii de format) in `tests/ai-targeted.test.js` — **fara nicio modificare de logica**, pentru a putea masura corect ce produce AI-ul fara interventie umana.
+
+### Cele cinci prompturi tintite
+
+| # | Tehnica | Metoda tinta | Platforma | Teste generate |
+|:--|:--|:--|:--|:--:|
+| P1 | Clase de echivalenta (EP) | `ShoppingCart.addItem` | ChatGPT (gpt-5) | 17 |
+| P2 | BVA pe praguri 200 si 0 | `PricingEngine.calculateShipping` | ChatGPT (gpt-5) | 14 |
+| P3 | Statement / Branch coverage (5 cai CFG) | `ShoppingCart.addItem` | Gemini 2.5 Flash | 5 |
+| P4 | MC/DC pe conditie compusa | `PricingEngine.calculateShipping` | ChatGPT (gpt-5) | 3 |
+| P5 | Mutation testing (10 mutanti) | `PricingEngine` (5 metode) | Claude Sonnet 4.6 | 10 |
+| | | | **Total** | **49** |
+
+Toate prompturile au folosit notatia, terminologia si etichetele specifice cursului (G1..Gn pentru clase globale, P1..Pn pentru cai independente in CFG, MC/DC cu tabel de perechi, mutanti etichetati cu valoarea de frontiera testata).
+
+### Rezultate brute (jest)
+
+Rularea suitei `npx jest tests/ai-targeted.test.js`:
+
+```
+Tests:       16 failed, 33 passed, 49 total
+```
+
+**Rata de succes: 33/49 = 67.3%**.
+
+Distributie per prompt si platforma:
+
+| # | Platforma | Pass | Fail | Rata |
+|:--|:--|:--:|:--:|:--:|
+| P1 EP | ChatGPT | 17 | 0 | **100%** |
+| P2 BVA | ChatGPT | 8 | 6 | 57% |
+| P3 SC/BC | Gemini | 1 | 4 | 20% |
+| P4 MC/DC | ChatGPT | 0 | 3 | 0% |
+| P5 Mutation | Claude | 7 | 3 | 70% |
+
+### Analiza esecurilor (16 teste)
+
+Esecurile NU sunt esecuri de metodologie — toate prompturile au respectat tehnica ceruta — ci **halucinatii ale AI-ului asupra API-ului si constantelor**, in ciuda specificarii explicite:
+
+| Cauza | Teste afectate | Exemplu | Platforma |
+|:--|:--:|:--|:--|
+| Apel static in loc de metoda de instanta (`PricingEngine.calculateShipping(...)`) | 3 | MC/DC t1-t3 | ChatGPT |
+| Constanta hardcodata gresita (`EXPRESS_COST = 25` vs real `30`) | 5 | BVA shipping express | ChatGPT |
+| `NaN` presupus ca arunca eroare (`typeof NaN === 'number'`) | 1 | BVA NaN | ChatGPT |
+| Categorie inventata (`'Fruits'`, `'Electronics'`) in loc de set valid | 4 | P2-P5 SC/BC | Gemini |
+| Ordine argumente gresita (`calculateItemTax(price, category, qty)` vs real `(price, qty, category)`) | 2 | M1, M2 | Claude |
+| Semantica gresita (`calculateLoyaltyPoints(100)` returneaza 20, nu 10) | 1 | M9 | Claude |
+
+Observatie cheie: **promptul P1 (EP) a obtinut 17/17 = 100%** desi a folosit doar specificatia, fara semnaturi explicite. Diferenta fata de celelalte: prompt-ul a listat exhaustiv valorile valide si invalide pentru fiecare variabila — AI-ul nu a avut nimic de "ghicit". In contrast, P4 (MC/DC) a omis sa precizeze ca metoda este de instanta — toate cele 3 teste apeleaza static.
+
+### Diferente intre platforme
+
+| Platforma | Stil cod | Observatii |
+|:--|:--|:--|
+| **ChatGPT (gpt-5)** | Concis, foloseste `beforeEach` corect, urmareste fidel cerinta | Hallucineaza constantele cand nu sunt date explicit |
+| **Gemini 2.5 Flash** | Verbose, comentarii in engleza pentru fiecare cale | Inventeaza categorii nementionate (`'Fruits'`, `'InvalidCategory'`) |
+| **Claude Sonnet 4.6** | Foarte structurat, foloseste corect `new PricingEngine()` din prima | Permuta ordinea argumentelor cand metoda are >2 parametri |
+
+### Comparatie: prompt generic vs prompturi tintite
+
+| Metrica | Prompt generic | Prompturi tintite (5) |
+|---------|:--------------:|:---------------------:|
+| Teste generate | 113 | 49 |
+| Teste care trec | 113/113 (100%) | 33/49 (67%) |
+| Strategii distincte | 1 (generala) | 5 (EP, BVA, SC/BC, MC/DC, MT) |
+| Platforme AI | 1 (ChatGPT) | 3 (ChatGPT + Gemini + Claude) |
+| Mapare test → metodologie | Nu | Da (per `describe`) |
+| Halucinatii API | Putine (vede sursa) | Multe (vede doar specificatia) |
+
+**Trade-off identificat:** promptul generic primeste codul sursa integral si produce teste care compileaza din prima, dar fara intentie metodologica clara. Prompturile tintite primesc doar specificatia + semnaturi si produc teste cu **intentie metodologica explicita per test**, dar platesc pretul halucinatiilor API atunci cand semantica nu este descrisa exhaustiv.
+
+### Concluzie experiment
+
+Pentru un workflow de testare practic, **combinarea celor doua abordari** este cea mai eficienta:
+1. **Prompturi tintite** pentru a obtine suite metodologic curate (EP/BVA/MC/DC) ce pot fi auditate de un examinator,
+2. **Prompt generic** pentru a umple lacunele de coverage si pentru a obtine teste functionale care trec din prima,
+3. **Revizie umana** obligatorie pentru a corecta halucinatiile API in suita tintita.
+
+Folosirea **mai multor platforme AI** in paralel a aratat ca limitarile nu sunt specifice unui singur model — toate trei modelele hallucineaza detalii de API atunci cand specificatia este incompleta, doar tipul de halucinatie difera. Prompturile tintite singure dau 67% rata de trecere — suficient pentru a demonstra metodologia, dar nu pentru a inlocui suita scrisa manual.
+
 ## 3. Rezultate Comparative
 
 ### 3.1 Numar de teste
